@@ -78,10 +78,15 @@ const tourStops = [
   },
 ]
 
+const whatsappPhoneNumber = '+919468121415'
+const whatsappMessage = encodeURIComponent('Hello Bloom Academy, I would like to chat about admissions.')
+
 function App() {
   const [active, setActive] = useState('home')
   const [menuOpen, setMenuOpen] = useState(false)
   const [pageFlip, setPageFlip] = useState({ active: false, direction: 'down', key: 0 })
+  const [contactForm, setContactForm] = useState({ parentName: '', email: '' })
+  const [formStatus, setFormStatus] = useState('')
 
   useEffect(() => {
     const revealItems = document.querySelectorAll('.reveal')
@@ -133,6 +138,27 @@ function App() {
       setPageFlip((flip) => ({ ...flip, active: false }))
     }, 900)
   }
+
+  const handleContactChange = (event) => {
+    const { name, value } = event.target
+
+    setContactForm((form) => ({ ...form, [name]: value }))
+    setFormStatus('')
+  }
+
+  const handleContactSubmit = (event) => {
+    event.preventDefault()
+
+    const tourMessage = encodeURIComponent(
+      `Hello Bloom Academy, I want to request a tour.\nParent name: ${contactForm.parentName}\nEmail: ${contactForm.email}`,
+    )
+
+    window.open(`https://wa.me/${whatsappPhoneNumber.replace(/\D/g, '')}?text=${tourMessage}`, '_blank', 'noopener,noreferrer')
+    setFormStatus(`Thank you ${contactForm.parentName}, opening WhatsApp now.`)
+    setContactForm({ parentName: '', email: '' })
+  }
+
+  const whatsappHref = `https://wa.me/${whatsappPhoneNumber.replace(/\D/g, '')}?text=${whatsappMessage}`
 
   return (
     <>
@@ -338,14 +364,44 @@ function App() {
             <p className="eyebrow">Visit us</p>
             <h2>Ready to start your Bloom Academy journey?</h2>
             <p>Schedule a tour, meet our teachers and see our classrooms in action.</p>
-            <form>
-              <input type="text" placeholder="Parent name" aria-label="Parent name" />
-              <input type="email" placeholder="Email address" aria-label="Email address" />
+            <form onSubmit={handleContactSubmit}>
+              <input
+                type="text"
+                name="parentName"
+                placeholder="Parent name"
+                aria-label="Parent name"
+                value={contactForm.parentName}
+                onChange={handleContactChange}
+                required
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email address"
+                aria-label="Email address"
+                value={contactForm.email}
+                onChange={handleContactChange}
+                required
+              />
               <button type="submit">Request a Tour</button>
             </form>
+            {formStatus && <p className="form-status" role="status">{formStatus}</p>}
           </div>
         </section>
       </main>
+
+      <a
+        className="whatsapp-link"
+        href={whatsappHref}
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Chat with us on WhatsApp"
+      >
+        <svg viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M16.04 3.2A12.72 12.72 0 0 0 5.3 22.74L3.9 28.8l6.2-1.55a12.7 12.7 0 0 0 5.94 1.5h.01A12.78 12.78 0 0 0 28.8 16 12.76 12.76 0 0 0 16.04 3.2Zm0 23.42h-.01a10.58 10.58 0 0 1-5.38-1.47l-.38-.23-3.68.92.78-3.6-.25-.38a10.62 10.62 0 1 1 8.92 4.76Zm5.82-7.95c-.32-.16-1.88-.93-2.17-1.03-.29-.11-.5-.16-.72.16-.21.32-.82 1.03-1 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.58-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.5.14-.65.15-.15.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.07 1.3 3.28c.16.21 2.24 3.42 5.43 4.8.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.88-.77 2.15-1.51.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37Z" />
+        </svg>
+        <span>Chat on WhatsApp</span>
+      </a>
     </>
   )
 }
