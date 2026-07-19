@@ -68,8 +68,8 @@ const tourStops = [
   },
   {
     title: 'Makers Lab',
-    text: 'Robotics tables, design walls and safe tools for hands-on invention.',
-    image: 'https://images.unsplash.com/photo-1581091870622-7c7d0c0f4432?auto=format&fit=crop&w=900&q=80',
+    text: 'Safe experiment benches, glassware and guided practical lessons for young scientists.',
+    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=80',
   },
   {
     title: 'Sports Lawn',
@@ -316,7 +316,13 @@ function App() {
           <div className="tour-map reveal delay-1">
             {tourStops.map((stop, index) => (
               <div className="tour-stop" key={stop.title}>
-                <img src={stop.image} alt={stop.title} />
+                <img
+                  src={stop.image}
+                  alt={stop.title}
+                  onError={(event) => {
+                    event.currentTarget.src = 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&w=900&q=80'
+                  }}
+                />
                 <span>{index + 1}</span>
                 <div>
                   <h3>{stop.title}</h3>
