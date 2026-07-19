@@ -647,6 +647,41 @@ input {
   padding: 1rem 1.2rem;
 }
 
+.form-status {
+  color: var(--green);
+  font-weight: 700;
+  margin: 1rem 0 0;
+}
+
+.whatsapp-link {
+  align-items: center;
+  background: #25d366;
+  border-radius: 999px;
+  bottom: 1.6rem;
+  box-shadow: 0 18px 40px rgba(37, 211, 102, 0.28);
+  color: var(--white);
+  display: inline-flex;
+  font-weight: 800;
+  gap: 0.65rem;
+  padding: 0.95rem 1.3rem;
+  position: fixed;
+  right: 1.6rem;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 80;
+}
+
+.whatsapp-link:hover {
+  box-shadow: 0 22px 48px rgba(37, 211, 102, 0.36);
+  transform: translateY(-4px);
+}
+
+.whatsapp-link svg {
+  fill: currentColor;
+  height: 1.45rem;
+  width: 1.45rem;
+}
+
 .reveal {
   opacity: 1;
   transform: translateY(0) scale(1);
@@ -782,6 +817,25 @@ input {
   .campus-gallery img:first-child {
     grid-row: auto;
     min-height: 240px;
+  }
+
+  .whatsapp-link {
+    border-radius: 50%;
+    bottom: 1rem;
+    height: 58px;
+    justify-content: center;
+    padding: 0;
+    right: 1rem;
+    width: 58px;
+  }
+
+  .whatsapp-link span {
+    display: none;
+  }
+
+  .whatsapp-link svg {
+    height: 1.75rem;
+    width: 1.75rem;
   }
 }
 
